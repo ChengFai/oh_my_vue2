@@ -9,6 +9,10 @@ export default new Vuex.Store({
     price: ""
   },
   getters: {
+    //getter类似于filter或者computed属性
+    showPrice(state) {
+      return state.price?  state.price + "美刀" : "--"
+    }
   },
   mutations: {
     addMethod(state, payload) {

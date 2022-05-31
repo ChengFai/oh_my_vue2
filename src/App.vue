@@ -12,7 +12,7 @@
     <my-add></my-add>
     <p>--------------------------------------------</p>
     <my-sub></my-sub>
-    <h1>我宣布以太坊价格为：{{$store.state.price}}</h1>
+    <h1>我宣布以太坊价格为：{{$store.getters.showPrice}}</h1>
     </div>
 </template>
 
