@@ -29,8 +29,7 @@ export default {
   methods: {
   },
   data() {
-    return {
-      num
+    return {  
     }
   }
 }
