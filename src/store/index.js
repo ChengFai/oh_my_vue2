@@ -27,6 +27,18 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    //action专门用来处理异步任务
+    //action里面也不能直接修改state，只有mutations里面可以
+    asyncMethodSub(context, payload) {
+      setTimeout(() => {
+        context.commit('reduceMethod', payload)
+      }, 1000);
+    },
+    asyncMethodAdd(context, payload) {
+      setTimeout(() => {
+        context.commit('addMethod', payload)
+      }, 1000);
+    }
   },
   modules: {
   }
