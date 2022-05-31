@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     count: 0,
-    time: ''
+    price: ""
   },
   getters: {
   },
@@ -24,11 +24,15 @@ export default new Vuex.Store({
     //     state.count -= payload
     // }, 1000);
       state.count -= payload
+    },
+    setPrice(state, payload) {
+      state.price = payload
     }
   },
   actions: {
     //action专门用来处理异步任务
     //action里面也不能直接修改state，只有mutations里面可以
+    //action通过dispatch触发
     asyncMethodSub(context, payload) {
       setTimeout(() => {
         context.commit('reduceMethod', payload)
@@ -38,6 +42,18 @@ export default new Vuex.Store({
       setTimeout(() => {
         context.commit('addMethod', payload)
       }, 1000);
+    },
+    asyncGetETHprice(context){
+      console.log('这个方法被执行了')
+      const url = "https://api.huobi.pro/market/detail/merged?symbol=ethusdt";
+      Vue.prototype.axios.get(url).then(
+          (response) => {
+              alert(response.data.tick.close)
+              context.commit('setPrice', response.data.tick.close)
+      }).catch(
+          (err) => {
+              console.error(err);
+      });
     }
   },
   modules: {

@@ -4,6 +4,7 @@
         <button @click="subNum(1)"> -1 </button>
         <button @click="subNum(5)"> -5 </button>
         <button @click="yibusubNum(100)"> 异步-10 </button>
+        <button @click="showPrice()"> 显示ETH价格 </button>
     </div>
 </template>
 
@@ -23,14 +24,16 @@ export default ({
         subNum(a) {
             this.reduceMethod(a);
             //this.$store.commit("reduceMethod", a);
-
             // this.$store.state.count -- ;
-            //这种更改数据的方式不推荐？
+            //这种更改数据的方式不推荐？这样能让vuex监控数据的变化，便于维护
             //vuex不推荐组件直接修改全局数据，建议使用mutation来修改数据
-            //这样能让vuex监控数据的变化，便于维护
+            
         },
         yibusubNum(a) {
             this.asyncMethodSub(a);
+        },
+        showPrice() {
+            this.$store.dispatch("asyncGetETHprice");
         }
     }
 })
