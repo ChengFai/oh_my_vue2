@@ -1,18 +1,23 @@
 <template>
     <div id="app">
-    <!-- <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav> -->
-    <hr>
+        <!-- <nav>
+          <router-link to="/">Home</router-link> |
+          <router-link to="/about">About</router-link>
+        </nav> -->
+        <hr>
+        <h1>下面是我的组件，用来测试i18n和router</h1>
+        <h2>宁选择的时间是{{0}}</h2>
+        <nav>
+            <router-link to="/home">首页</router-link> |
+            <router-link to="/data">数据</router-link>
+        </nav>
 
-    <h1>下面是我的组件</h1>
+        <hr>
 
-
-    <my-add></my-add>
-    <p>--------------------------------------------</p>
-    <my-sub></my-sub>
-    <h1>我宣布以太坊价格为：{{$store.getters.showPrice}}</h1>
+        <div id="app">
+            <p>{{ $d(new Date(), 'short') }}</p>
+            <p>{{ $d(new Date(), 'long', 'ja-JP') }}</p>
+        </div>
     </div>
 </template>
 
