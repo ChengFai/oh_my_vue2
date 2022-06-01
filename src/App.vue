@@ -14,10 +14,10 @@
 
         <hr>
 
-        <div id="app">
+        <!-- <div id="app">
             <p>{{ $d(new Date(), 'short') }}</p>
             <p>{{ $d(new Date(), 'long', 'ja-JP') }}</p>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -29,18 +29,17 @@ import Sub from './components/compo_sub.vue'
 export default {
   name: 'App',
   components: {
-    "my-add": Add,
-    "my-sub": Sub
-    },
+    'my-add': Add,
+    'my-sub': Sub
+  },
   methods: {
   },
-  data() {
-    return {  
+  data () {
+    return {
     }
   }
 }
 </script>
-
 
 <style>
 .buttonGroup {

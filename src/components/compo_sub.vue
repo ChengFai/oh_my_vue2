@@ -9,32 +9,31 @@
 </template>
 
 <script>
-import { mapState,mapMutations, mapActions } from "vuex"
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default ({
-    data() {
-        return {
-        }
-    },
-    computed: {
-        ...mapState(["count"])
-    },
-    methods: {
-        ...mapMutations(["reduceMethod"]),
-        ...mapActions(["asyncMethodSub"]),
-        subNum(a) {
-            this.reduceMethod(a);
-            //this.$store.commit("reduceMethod", a);
-            // this.$store.state.count -- ;
-            //这种更改数据的方式不推荐？这样能让vuex监控数据的变化，便于维护
-            //vuex不推荐组件直接修改全局数据，建议使用mutation来修改数据
-            
-        },
-        yibusubNum(a) {
-            this.asyncMethodSub(a);
-        },
-        showPrice() {
-            this.$store.dispatch("asyncGetETHprice");
-        }
+  data () {
+    return {
     }
+  },
+  computed: {
+    ...mapState(['count'])
+  },
+  methods: {
+    ...mapMutations(['reduceMethod']),
+    ...mapActions(['asyncMethodSub']),
+    subNum (a) {
+      this.reduceMethod(a)
+      // this.$store.commit("reduceMethod", a);
+      // this.$store.state.count -- ;
+      // 这种更改数据的方式不推荐？这样能让vuex监控数据的变化，便于维护
+      // vuex不推荐组件直接修改全局数据，建议使用mutation来修改数据
+    },
+    yibusubNum (a) {
+      this.asyncMethodSub(a)
+    },
+    showPrice () {
+      this.$store.dispatch('asyncGetETHprice')
+    }
+  }
 })
 </script>

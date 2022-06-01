@@ -1,3 +1,3 @@
 export default function () {
-    console.log('这个方法被执行了')
+  console.log('这个方法被执行了')
 }

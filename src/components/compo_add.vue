@@ -8,17 +8,17 @@
 
 <script>
 export default ({
-    data() {
-        return {
-        }
-    },
-    methods: {
-        add(a) {
-            this.$store.commit("addMethod", a);
-        }
-        // showCount() {
-        //     alert("通过Store.state来访问数据:"+ this.$store.state.count)
-        // }
+  data () {
+    return {
     }
+  },
+  methods: {
+    add (a) {
+      this.$store.commit('addMethod', a)
+    }
+    // showCount() {
+    //     alert("通过Store.state来访问数据:"+ this.$store.state.count)
+    // }
+  }
 })
 </script>
