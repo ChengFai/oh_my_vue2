@@ -1,25 +1,27 @@
 <template>
     <div>
-        <h3>当前的count值为：{{btc_price}}</h3>
+        <h3>当前的BTC价格为：{{btc_price}}</h3>
     </div>
 </template>
 
 <script>
+import unzip from "./unzip.js"
+
 export default {
   data () {
     return {
-      btc_price: 0.00
+      btc_price: "0.00",
+      websock_id: 4152629025
     }
   },
   created () {
-    this.initWebSocket()
   },
   methods: {
       initWebSocket(){ 
         if(typeof(WebSocket) === "undefined"){
           alert("您的浏览器不支持WebSocket")
         }else{
-          const ws_url = "wss://api-aws.huobi.pro/ws"
+          const ws_url = "wss://stream.binance.com:9443/ws"
           this.websock = new WebSocket(ws_url);
           this.websock.onopen = this.websocketonopen;
           this.websock.onerror = this.websocketonerror;
@@ -28,19 +30,27 @@ export default {
         }
       },
       websocketonopen(){
-        alert("socket连接成功")
-        let init_data = {"test":"12345"};
+        let init_data = {
+          "method": "SUBSCRIBE",
+          "params":["btcusdt@aggTrade","btcusdt@depth"],
+          "id": 1
+        }
         this.websocketsend(JSON.stringify(init_data));
       },
       // 连接建立失败重连
       websocketonerror(){
-        console.log("连接错误");
         this.initWebSocket();
       },
       // 数据接收
       websocketonmessage(e){
-        const resdata = JSON.parse(e.data);
-        console.log(resdata);
+        const { p : latestPrice } = JSON.parse(e.data);
+        this.setPrice(latestPrice);
+      },
+      setPrice(latestPrice){
+        if(latestPrice)
+        {
+          this.btc_price = latestPrice.substring(0,latestPrice.indexOf(".") + 3);
+        }
       },
       // 数据发送
       websocketsend(Data){
@@ -48,7 +58,6 @@ export default {
       },
       // 关闭
       websocketclose(e){
-        alert("socket连接关闭")
         console.log('WebSocket 断开连接',e);
       },
   },    

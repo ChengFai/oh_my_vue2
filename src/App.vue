@@ -7,6 +7,7 @@
         <hr>
         <h1>下面是我的组件，用来测试i18n和router</h1>
         <h2>宁选择的时间是{{0}}</h2>
+        <my-sub></my-sub>
         <nav>
             <router-link to="/home">首页</router-link> |
             <router-link to="/data">数据</router-link>
