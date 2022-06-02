@@ -1,6 +1,20 @@
 <template>
     <div>
-        <h3>当前的BTC价格为：{{btc_price}}</h3>
+        <h3>当前币安的聚合行情涨幅榜：</h3>
+        <table>
+          <tbody>
+            <tr>
+              <th>排名</th>
+              <th>币种</th>
+              <th>涨幅</th>
+            </tr>
+            <tr v-for="(item, index) in topList" :key="item[0]">
+              <td>{{index + 1}}</td>
+              <td>{{item[0]}}</td>
+              <td>{{item[1]}}</td>
+            </tr>
+          </tbody>
+        </table>
     </div>
 </template>
 
@@ -10,17 +24,27 @@ export default {
   data () {
     return {
       btc_price: "0.00",
+      topList: [],
+      dataList: [],
+      usdt_list: [],
+      symbol_list: [],
+      change_map: new Map(),
       websock_id: 415257348439
     }
   },
   created () {
+    this.symbol_list = localStorage.getItem("symbolList").split(",");
+    this.symbol_list.forEach(item => {
+      this.change_map.set(item, "0.00");
+    });
+    this.initWebSocket();
   },
   methods: {
       initWebSocket(){ 
         if(typeof(WebSocket) === "undefined"){
           alert("您的浏览器不支持WebSocket")
         }else{
-          const ws_url = "wss://stream.binance.com:9443/ws"
+          const ws_url = "wss://stream.binance.com:9443/ws/!ticker@arr"
           this.websock = new WebSocket(ws_url);
           this.websock.onopen = this.websocketonopen;
           this.websock.onerror = this.websocketonerror;
@@ -29,12 +53,7 @@ export default {
         }
       },
       websocketonopen(){
-        let init_data = {
-          "method": "SUBSCRIBE",
-          "params":["btcusdt@aggTrade","btcusdt@depth"],
-          "id": 1
-        }
-        this.websocketsend(JSON.stringify(init_data));
+        this.websocketsend();
       },
       // 连接建立失败重连
       websocketonerror(){
@@ -42,10 +61,24 @@ export default {
       },
       // 数据接收
       websocketonmessage(e){
-        const { p : latestPrice } = JSON.parse(e.data);
-        this.setPrice(latestPrice);
+        let data = JSON.parse(e.data);
+        if(Array.isArray(data)){
+          data.forEach(item => {
+            if(this.change_map.has(item.s)){
+              this.change_map.set(item.s, item.P);
+              }
+          });
+        }
+        this.topList = Array.from(this.change_map).sort((a, b) => {
+          return  b[1] - a[1];
+        }).filter((item) => {
+          return item[0].substr(-8) !== "DOWNUSDT";
+        }).slice(0, 20).map((item) => {
+          return [item[0], item[1] + "%"];
+        });
+        console.log(this.topList)
       },
-      setPrice(latestPrice){
+      setTopList(latestPrice){
         if(latestPrice)
         {
           this.btc_price = latestPrice.substring(0,latestPrice.indexOf(".") + 3);
@@ -57,7 +90,7 @@ export default {
       },
       // 关闭
       websocketclose(e){
-        console.log('WebSocket 断开连接',e);
+        this.initWebSocket();
       },
   },    
   beforeDestroy() {

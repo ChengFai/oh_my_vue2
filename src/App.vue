@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <my-sub></my-sub>
         <nav>
           <router-link to="/one">点我显示1</router-link> |
           <router-link to="/two">点我显示2</router-link>
