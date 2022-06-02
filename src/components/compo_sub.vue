@@ -1,39 +1,63 @@
 <template>
     <div>
-        <h3>当前的count值为：{{count}}</h3>
-        <button @click="subNum(1)"> -1 </button>
-        <button @click="subNum(5)"> -5 </button>
-        <button @click="yibusubNum(100)"> 异步-10 </button>
-        <button @click="showPrice()"> 显示ETH价格 </button>
+        <h3>当前的count值为：{{btc_price}}</h3>
     </div>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
-export default ({
+export default {
   data () {
     return {
+      btc_price: 0.00
     }
   },
-  computed: {
-    ...mapState(['count'])
+  created () {
+    this.initWebSocket()
   },
   methods: {
-    ...mapMutations(['reduceMethod']),
-    ...mapActions(['asyncMethodSub']),
-    subNum (a) {
-      this.reduceMethod(a)
-      // this.$store.commit("reduceMethod", a);
-      // this.$store.state.count -- ;
-      // 这种更改数据的方式不推荐？这样能让vuex监控数据的变化，便于维护
-      // vuex不推荐组件直接修改全局数据，建议使用mutation来修改数据
-    },
-    yibusubNum (a) {
-      this.asyncMethodSub(a)
-    },
-    showPrice () {
-      this.$store.dispatch('asyncGetETHprice')
-    }
-  }
-})
+      initWebSocket(){ 
+        if(typeof(WebSocket) === "undefined"){
+          alert("您的浏览器不支持WebSocket")
+        }else{
+          const ws_url = "wss://api-aws.huobi.pro/ws"
+          this.websock = new WebSocket(ws_url);
+          this.websock.onopen = this.websocketonopen;
+          this.websock.onerror = this.websocketonerror;
+          this.websock.onmessage = this.websocketonmessage;
+          this.websock.onclose = this.websocketclose;
+        }
+      },
+      websocketonopen(){
+        alert("socket连接成功")
+        let init_data = {"test":"12345"};
+        this.websocketsend(JSON.stringify(init_data));
+      },
+      // 连接建立失败重连
+      websocketonerror(){
+        console.log("连接错误");
+        this.initWebSocket();
+      },
+      // 数据接收
+      websocketonmessage(e){
+        const resdata = JSON.parse(e.data);
+        console.log(resdata);
+      },
+      // 数据发送
+      websocketsend(Data){
+        this.websock.send(Data);
+      },
+      // 关闭
+      websocketclose(e){
+        alert("socket连接关闭")
+        console.log('WebSocket 断开连接',e);
+      },
+  },    
+  beforeDestroy() {
+    this.websock.close();
+  },
+}
+
 </script>
+
+
+      
