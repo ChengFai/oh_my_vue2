@@ -5,13 +5,12 @@
 </template>
 
 <script>
-import unzip from "./unzip.js"
 
 export default {
   data () {
     return {
       btc_price: "0.00",
-      websock_id: 4152629025
+      websock_id: 415257348439
     }
   },
   created () {
