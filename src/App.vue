@@ -1,11 +1,16 @@
 <template>
     <div id="app">
-        <my-sub></my-sub>
-        <nav>
-          <router-link to="/one">点我显示1</router-link> |
-          <router-link to="/two">点我显示2</router-link>
-        </nav>
-        <router-view></router-view>
+        <!-- <nav>
+          <router-link to="/havekeep">我</router-link> |
+          <router-link to="/havekeep">币安行情</router-link>
+        </nav> -->
+        <el-switch  v-model="isShow" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+        <keep-alive>
+              <my-keep v-if="isShow"></my-keep>
+        </keep-alive>
+        <keep-alive exclude="nokeep">
+              <my-nokeep v-if="isShow"></my-nokeep>
+        </keep-alive>
     </div>
 </template>
 
@@ -13,17 +18,22 @@
 // import HelloWorld from './components/HelloWorld.vue'
 import Add from './components/compo_add.vue'
 import Sub from './components/compo_sub.vue'
+import Keep from './components/havekeep.vue'
+import NoKeep from './components/nokeep.vue'
 
 export default {
   name: 'App',
   components: {
     'my-add': Add,
-    'my-sub': Sub
+    'my-sub': Sub,
+    'my-keep': Keep,
+    'my-nokeep': NoKeep,
   },
   methods: {
   },
   data () {
     return {
+      isShow: true,
     }
   }
 }

@@ -6,12 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     count: 0,
-    price: ''
+    price: 0.00,
   },
   getters: {
     // getter类似于filter或者computed属性
     showPrice (state) {
       return state.price ? state.price + '美刀' : '--'
+    },
+    countPlus (state) {
+      return state.count + 1
     }
   },
   mutations: {
@@ -22,6 +25,10 @@ export default new Vuex.Store({
     // 千万不能通过这种方式设置延迟，因为这样会导致状态不一致
     // mutation里面不能写异步操作，请改用action
       state.count += payload
+    },
+    addPrice (state, payload) {
+      let a = state.price + payload
+      state.price = a
     },
     reduceMethod (state, payload) {
     //   setTimeout(() => {

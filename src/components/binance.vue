@@ -65,7 +65,9 @@ export default {
       },
       // 连接建立失败重连
       websocketonerror(){
-        this.initWebSocket();
+        setTimeout(() => {
+          this.initWebSocket();
+        }, 5000);
       },
       // 数据接收
       websocketonmessage(e){
@@ -112,7 +114,9 @@ export default {
       },
       // 关闭
       websocketclose(e){
-        this.initWebSocket();
+        setTimeout(() => {
+          this.initWebSocket();
+        }, 2000);
       },
   },    
   beforeDestroy() {
