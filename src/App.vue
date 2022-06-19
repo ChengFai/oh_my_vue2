@@ -1,16 +1,18 @@
 <template>
     <div id="app">
+      <div class="box1"></div>
+      <div class="box2"></div>
         <!-- <nav>
           <router-link to="/havekeep">我</router-link> |
           <router-link to="/havekeep">币安行情</router-link>
         </nav> -->
-        <el-switch  v-model="isShow" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+        <!-- <el-switch  v-model="isShow" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
         <keep-alive>
               <my-keep v-if="isShow"></my-keep>
         </keep-alive>
         <keep-alive exclude="nokeep">
               <my-nokeep v-if="isShow"></my-nokeep>
-        </keep-alive>
+        </keep-alive> -->
     </div>
 </template>
 
@@ -39,6 +41,10 @@ export default {
 }
 </script>
 
+<style  src = "./assets/css/main.css"
+        lang="css" scoped>
+</style>
+<!-- 
 <style>
 .buttonGroup {
   display: grid;
@@ -90,4 +96,4 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
-</style>
+</style> -->
