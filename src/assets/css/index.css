@@ -1,8 +1,16 @@
-ul.plain {
+#fancybox {
+  width: 400px;
+}
+
+.alice_bob {
+  color: red;
+}
+
+ul .plain {
   color: #444;
   list-style: none;
 }
-ul.plain li {
+ul .plain li {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0px;

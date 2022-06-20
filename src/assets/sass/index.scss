@@ -1,9 +1,8 @@
-// @import "./module1";
-// @import "./module2.scss";
+@import "./_module1";
+@import "./module2.scss";
 // @import "./not_a_scss.css";
 //导入css不做编译
 //导入scss时会做合并
-
 
 @mixin no-bullets {
     list-style: none;
@@ -13,9 +12,8 @@
       margin-left: 0px;
     }
 }
-  
-ul.plain {
-    color: #444;
-    @include no-bullets.li;
+
+ul .plain {
+  color: #444;
+  @include no-bullets;
 }
-  
